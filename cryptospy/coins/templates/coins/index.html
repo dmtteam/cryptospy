@@ -1,0 +1,72 @@
+{% extends 'coins/base_outside.html' %}
+
+{% block content %}
+
+
+<table align="center" width="90%" cellspacing="0" border="0">
+    <tr>
+        <td width="50%" valign="top" >
+            <div class="bg-secondary">
+                <b>About CryptoSpy v1:</b>
+                <br>
+                <i>Welcome to CryptoSpy - Your new (favourite) spy app!
+
+
+                </i>
+                <ul>
+                    <li>track unlimited ETH addresses</li>
+                    <li>get the current value of funds</li>
+                    <li>spy defined movement on the wallet</li>
+                    <li>automatically check the activity of tracked wallets on Twitter</li>
+                    <li>get email notifications</li>
+                </ul>
+            </div>
+        </td>
+        <td align="center" valign="top">
+<div class="bg-success">sth here or delete</div>
+
+        </td>
+    </tr>
+</table>
+
+
+
+<table align="center" width="90%" cellspacing="0" border="1">
+    <tr>
+        <td width="70%" valign="top" >
+            <div>
+                <b><font color="red"><i>Sample tracked wallets:</i></font></b><br>
+{% for wallet in wallets %}
+                <b>{{ wallet.label }}:</b>
+   <font color="blue">{{ wallet.eth_adress}}</font>
+    <br>
+{% endfor %}
+                </div>
+        </td>
+        <td align="center" valign="bottom">
+*** empty space ***
+<br>
+{% for user_wallet in user_wallets %}
+               {{ user_wallet.user }}:
+{{ user_wallet.id_minimum_income_to_spy}}
+    <br>
+{% endfor %}
+
+
+
+
+<br>
+<br><Br>
+
+
+
+        </td>
+    </tr>
+</table>
+
+
+{% endblock %}
+
+
+<!-- https://docs.djangoproject.com/en/4.0/ref/contrib/auth/#django.contrib.auth.models.User.password >>
+

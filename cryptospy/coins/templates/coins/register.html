@@ -1,0 +1,30 @@
+{% extends 'coins/base_outside.html' %}
+
+{% block content %}
+
+<table align="center" width="90%" cellspacing="0" border="0">
+    <tr>
+        <td width="45%" align="left" valign="top" >
+
+   {% load crispy_forms_tags %}
+
+<!--Register-->
+<div class="container py-5">
+	<form method="POST">
+		{% csrf_token %}
+		{{ register_form|crispy }}
+		<button class="btn btn-primary" type="submit">Register</button>
+	</form>
+	<p class="text-center">If you already have an account, <a href="/login">login</a> instead.</p>
+</div>
+
+            </td>
+<td align="center" valign="top">
+
+</td>
+    </tr></table>
+
+
+<bR><br>
+
+{% endblock %}

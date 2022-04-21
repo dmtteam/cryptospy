@@ -1,0 +1,17 @@
+{% extends 'coins/base_inside.html' %}
+
+            {% block content %}
+<table align="center" width="90%" cellspacing="0" border="0">
+    <tr>
+        <td>
+
+<div class="container py-5">
+    {% for wallet in object_list %}
+        {{ wallet.eth_adress }}
+            {{ wallet.label }}
+    <br>
+    {% endfor %}
+</div>
+
+     </td></tr></table>
+{% endblock %}

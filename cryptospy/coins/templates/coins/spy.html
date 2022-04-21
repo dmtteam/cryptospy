@@ -1,0 +1,19 @@
+
+{% extends 'coins/base_inside.html' %}
+
+{% block content %}
+
+<bR><br>
+<b><font color="red"><i>Sample tracked wallets:</i></font></b><br>
+{% for wallet in user_wallets %}
+                <b>{{ wallet.label }}:</b>
+   <font color="blue">{{ wallet.eth_adress}}</font>
+    <br>
+{% endfor %}
+                </div>
+
+<br>
+# https://docs.djangoproject.com/en/4.0/howto/custom-management-commands/
+<br>
+
+{% endblock %}

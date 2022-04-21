@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+    <title>CryptoSpy v1</title>
+</head>
+<body>
+<br>
+
+<table bgcolor="98FB98" align="center" width="90%" cellspacing="0" border="1">
+    <tr><td><H3>Welcome to CryptoSpy v1 - django</H3></td></tr>
+</table>
+
+<table align="center" width="90%" cellspacing="0" border="0">
+    <tr>
+      <td width="65%" valign="top" >
+            <div class="bg-gray">
+                    Welcome: <font color="blue"><b> {{ user.username }}</b></font>
+&nbsp/&nbsp
+                    <a href="{% url 'spy' %}"><u>Main page</u></a>
+&nbsp/&nbsp
+                    <a href="{% url 'create_wallet' %}"><u>Create wallet</u></a>
+&nbsp/&nbsp
+                    <a href="{% url 'wallet_lists' %}"><u>Wallet List</u></a>
+&nbsp/&nbsp
+                    <a href="{% url 'results' %}"><u>Results page</u></a>
+&nbsp/&nbsp
+
+                     <a href="{% url 'logged_out' %}"><u>Logout</u></a>
+
+
+            </div>
+        </td>
+            <td align="right">
+  <div class="bg-gray">
+                           ETH/BTC:
+            <font color="red">
+                        {{ last_price.ethbtc }}
+            </font>
+                         &nbsp/&nbsp
+                        ETH/USD:
+            <font color="red">
+                        {{ last_price.ethusd }}
+            </font>
+                        &nbsp/&nbsp
+             <font color="blue">
+                        {{timestamp}}
+             </font>
+  </div>
+        </td>
+    </tr>
+</table>
+<br>
+<div>
+
+
+
+
+</div>
+
+{% block content %}
+
+{% endblock %}
+
+</body>
+</html>

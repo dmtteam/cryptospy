@@ -1,0 +1,21 @@
+
+{% extends 'coins/base_inside.html' %}
+
+
+{% load crispy_forms_tags %}
+            {% block content %}
+<table align="center" width="90%" cellspacing="0" border="0">
+    <tr>
+        <td>
+
+<div class="container py-5">
+	<form method="POST">
+		{% csrf_token %}
+		{{ form|crispy }}
+
+		<button class="btn btn-primary" type="submit">Create wallet</button>
+	</form>
+</div>
+     </td></tr></table>
+{% endblock %}
+

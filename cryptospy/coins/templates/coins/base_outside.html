@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+    <title>CryptoSpy v1 - index.html</title>
+</head>
+<body>
+<br>
+<table bgcolor="ffffb3" align="center" width="90%" cellspacing="0" border="1">
+    <tr><td><H3>CryptoSpy v1 - django</H3></td></tr>
+</table>
+
+<table align="center" width="90%" cellspacing="0" border="0">
+    <tr>
+        <td width="25%" valign="top" >
+            <div class="bg-gray">
+            <b>Index</b>
+                &nbsp/&nbsp
+                <a href="login/"><u>Login</u></a>
+                 &nbsp/&nbsp
+                <a href="{% url 'register' %}"><u>Register</u></a>
+                 &nbsp/&nbsp
+
+            </div>
+        </td>
+        <td align="right">
+              <div class="bg-gray">
+                        ETH/BTC:
+            <font color="red">
+                        {{ last_price.ethbtc }}
+            </font>
+                         &nbsp/&nbsp
+                        ETH/USD:
+            <font color="red">
+                        {{ last_price.ethusd }}
+            </font>
+                        &nbsp/&nbsp
+             <font color="blue">
+                        {{timestamp}}
+             </font>
+              </div>
+        </td>
+    </tr>
+</table>
+<br>
+
+
+{% block content %}
+
+{% endblock %}
+
+</body>
+</html>
