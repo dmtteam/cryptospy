@@ -33,9 +33,9 @@ urlpatterns = [
 
     path('logged_out', logged_out_page, name='logged_out'),
 
-    path("password_reset", password_reset_request, name="password_reset"),
+    # path("password_reset", password_reset_request, name="password_reset"),
 
-    #path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
 
     path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='password/password_reset_done.html'),
          name='password_reset_done'),

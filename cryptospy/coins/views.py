@@ -67,7 +67,7 @@ def spy_page(request):
 
 def logged_out_page(request):
     wallets = Wallet.objects.all()
-    logout(request)                                                                     # sprawdzic czy to działa ??????
+    logout(request)                                                                     # done?
     return render(request, "coins/logged_out.html", {"wallets": wallets})
 
 """
@@ -92,12 +92,13 @@ def register_page(request):
     form = NewUserForm()
     return render(request, "coins/register.html", {"wallets": wallets, "register_form": form})
 
+
 # check
 def homepage(request):
     return render(request=request, template_name="coins/index.html")
 
 
-def password_reset_request(request):
+"""def password_reset_request(request):
     if request.method == "POST":
         password_reset_form = PasswordResetForm(request.POST)
         if password_reset_form.is_valid():
@@ -128,7 +129,7 @@ def password_reset_request(request):
     password_reset_form = PasswordResetForm()
     return render(request=request, template_name="password/password_reset.html",
                   context={"password_reset_form": password_reset_form})
-
+"""
 
 def four_houndred_four_page(request):
     wallets = Wallet.objects.all()
@@ -151,3 +152,12 @@ class UserWalletRequestCreateView(CreateView):
 
 class UserWalletRequestListView(ListView):
     model = UserWalletRequest
+
+
+#update view
+#delete view
+#detail view
+
+
+
+
