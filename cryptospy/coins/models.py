@@ -22,14 +22,16 @@ class UserWallet(models.Model):
     def __str__(self):
         return f'{self.wallet.label}, {self.user.username}'
 
+
 class UserWalletRequest(models.Model):
     eth_adress = models.CharField(max_length=42)
     label = models.CharField(max_length=100)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    minimum_income_to_spy = models.CharField(max_length=10)
-    minimum_outcome_to_spy = models.CharField(max_length=10)
+    minimum_income_to_spy = models.DecimalField(max_length=10, default=0.1, decimal_places=2, max_digits=20)
+    minimum_outcome_to_spy = models.DecimalField(max_length=10, default=0.1, decimal_places=2, max_digits=20)
     twitter = models.BooleanField(default=False)
     mail = models.BooleanField(default=False)
+    api_key = models.ForeignKey('UserApiStrings', on_delete=models.CASCADE, null=True)
 
 
 class WalletHistory(models.Model):
@@ -56,6 +58,21 @@ class ApiStrings(models.Model):
             self.api_string = self.password
             self.password = ""
         super().save(*args, **kwargs)
+
+
+class UserApiStrings(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE,  null=True)
+    user_api_name = models.CharField(max_length=111)
+    user_api_password = models.CharField(max_length=199, default="", blank=True)
+
+    def __str__(self):
+        # return self.api_string
+        return f'{self.user_api_name}'
+
+
+class TwitterHashTags(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    twitter_hash_tag = models.CharField(max_length=42)
 
 
 # python cryptospy/manage.py makemigrations
