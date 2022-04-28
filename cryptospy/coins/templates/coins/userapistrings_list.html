@@ -1,0 +1,60 @@
+{% extends 'coins/base_inside.html' %}
+
+
+{% block content %}
+<table align="center" width="90%" cellspacing="0" border="0">
+    <tr>
+        <td>
+
+           <table border="1" bordercolor="PINK" cellspacing="0">
+              <tr>
+                  <td>
+                      <b>API NAME:</b>&nbsp;&nbsp;
+                  </td>
+                  <td>
+                      <b>API PASSWORD:</b>&nbsp;&nbsp;
+                  </td>
+                  <td>
+                      <b>MODIFY</b>&nbsp;&nbsp;
+                  </td>
+                  <td>
+                      <b>GOOD BYE!</b>&nbsp;&nbsp;
+                  </td>
+              </tr>
+                  {% for key in api_list_keys %}
+               <tr>
+                  <td>
+                      {{ key.user_api_name }}
+                  </td>
+                  <td>
+                      {{ key.user_api_password }}
+
+                  </td>
+ <td>
+                    <a href="{% url 'api_update' key.id %}">
+                <b><u>update</u></b>
+                </a>
+
+                  </td>
+                  <td>
+                     <a href="{% url 'api_delete' key.id %}">
+                   <font color="red">
+                       <u>
+             delete
+                           </u>
+                       </font>
+            </a>
+
+                  </td>
+
+              </tr>
+                {% endfor %}
+           </table>
+
+<bR>
+
+         <a href="{% url 'api_create' %}"><b><u>Add new api here</u></b></a>
+
+ </td></tr></table>
+
+{% endblock %}
