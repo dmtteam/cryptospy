@@ -5,13 +5,52 @@
     <tr>
         <td>
 
-<div class="container py-5">
-    {% for wallet in object_list %}
-        {{ wallet.eth_adress }}
-            {{ wallet.label }}
-    <br>
-    {% endfor %}
-</div>
+           <table border="1" bordercolor="PINK" cellspacing="0">
+              <tr>
+                  <td>
+                      <b>LABEL (click for details)</b>&nbsp;&nbsp;
+                  </td>
+                  <td>
+                      <b>ETH WALLET</b>&nbsp;&nbsp;
+                  </td>
+                    <td>
+                      <b>MODIFY</b>&nbsp;&nbsp;
+                  </td>
+                  <td>
+                      <b>GOOD BYE!</b>&nbsp;&nbsp;
+                  </td>
+</tr>
+                {% for wallet in object_list %}
+   <TR>
+       <TD>
+            <a href="{% url 'wallet_detail' wallet.id %}">
+    {{ wallet.label }}
+               </a>
+
+       </TD>
+       <TD>
+         {{ wallet.eth_adress }}
+       </TD>
+       <TD>
+          <a href="{% url 'wallet_update' wallet.id %}">
+                <b><u>update</u></b>
+                </a>
+       </TD>
+       <TD>
+  <a href="{% url 'wallet_delete' wallet.id %}">
+                   <font color="red">
+                       <u>
+             delete
+                           </u>
+                       </font>
+            </a>
+       </TD>
+   </TR>
+                  {% endfor %}
+         </table>
+
+<Br><BR>
+
 
      </td></tr></table>
 {% endblock %}

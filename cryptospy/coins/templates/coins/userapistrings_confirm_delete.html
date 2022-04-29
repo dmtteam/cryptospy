@@ -7,12 +7,14 @@
 <table align="center" width="90%" cellspacing="0" border="0">
     <tr>
         <td>
+      {{ object.user_api_name }}
 
 <div class="container py-5">
 	<form method="POST">
 		{% csrf_token %}
 
-        {{ key.user_api_name }}
+
+
         <br><bR>
 		{{ form|crispy }}
 
