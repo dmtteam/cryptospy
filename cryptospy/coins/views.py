@@ -1,3 +1,5 @@
+import pprint
+
 from django.shortcuts import render
 
 # Create your views here.
@@ -7,7 +9,7 @@ from django.http import HttpResponse
 
 
 from django.shortcuts import render
-from .models import Wallet
+from .models import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.contrib.auth import logout as main_logout
@@ -32,11 +34,21 @@ from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
 
-from django.views.generic.edit import CreateView
-from django.views.generic import ListView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, TemplateView
+from django.urls import reverse_lazy
+from django.views.generic.detail import DetailView
 
 from .models import UserWalletRequest
 from django import forms
+
+from etherscan.accounts import Account
+import time
+
+import pprint
+from decimal import Decimal
+from .twitter import main
+
 
 def main_page(request):
     key = ApiStrings.objects.filter(api_name="etherscan").first().api_string
@@ -51,7 +63,7 @@ def main_page(request):
 @login_required(login_url='/login/')
 def results_page(request):
     wallets = Wallet.objects.all()
-    return render(request, "coins/results.html", {"wallets": wallets})
+    return render(request, "coins/userapistrings_list.html", {"wallets": wallets})
 
 
 @login_required(login_url='/login/')
@@ -85,6 +97,7 @@ def register_page(request):
         form = NewUserForm(request.POST)
         if form.is_valid():
             user = form.save()
+            UserSettings.objects.create(user=user)
             login(request, user)
             messages.success(request, "Registration successful.Thank You!")
             return redirect("login")
@@ -118,7 +131,7 @@ def homepage(request):
                     }
                     email = render_to_string(email_template_name, c)
                     try:
-                        send_mail(subject, email, 'cryptospyalert@gmail.com', [user.email], fail_silently=False)
+                        send_mail(subject, email, '!!!!!! add @ here !!!!!!', [user.email], fail_silently=False)
                     except BadHeaderError:
 
                         return HttpResponse('Invalid header found.')
@@ -138,8 +151,98 @@ def four_houndred_four_page(request):
 
 class UserWalletRequestCreateView(CreateView):
     model = UserWalletRequest
-    fields = ["eth_adress", "label", "user", "minimum_income_to_spy", "minimum_outcome_to_spy", "twitter", "mail"]
+    fields = ["eth_adress", "label", "user", "minimum_income_to_spy", "maximum_income_to_spy", "api_key"]
     success_url = "spy"
+
+    def get_initial(self):
+        return {"user": self.request.user}
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['user'].widget = forms.HiddenInput()
+        form.fields['api_key'].queryset = UserApiStrings.objects.filter(user=self.request.user)
+        return form
+
+
+class UserWalletRequestListView(ListView):
+    model = UserWalletRequest
+
+
+class UserWalletRequestUpdateView(UpdateView):
+    model = UserWalletRequest
+    fields = ["eth_adress", "label", "minimum_income_to_spy", "maximum_income_to_spy", "api_key"]
+    success_url = reverse_lazy('wallet_lists')
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['api_key'].queryset = UserApiStrings.objects.filter(user=self.request.user)
+        return form
+
+
+class UserWalletRequestDeleteView(DeleteView):
+    model = UserWalletRequest
+    success_url = reverse_lazy('wallet_lists')
+
+
+class UserWalletRequestDetailView(DetailView):
+    model = UserWalletRequest
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['api_data'] = self.get_api_data()[0]
+        context['balance'] = self.convert_balance(self.get_api_data()[1])
+        context['twitter_hashtags'] = TwitterHashTags.objects.filter(user=self.request.user, wallet=self.object, mode="h")
+        context['twitter_accounts'] = TwitterHashTags.objects.filter(user=self.request.user, wallet=self.object,
+                                                             mode="u")
+        context['twitter_data'] = main(self.request.user.settings.twitter_token)
+
+        # pprint.pprint(context['api_data'][0])
+        return context
+
+    def convert_balance(self, balance):
+        wei = Decimal(int(balance))
+        power = 10 ** 18
+        balance_converted = wei / power
+        return balance_converted
+
+
+    def get_api_data(self):
+        api = Account(address=self.object.eth_adress, api_key=self.object.api_key.user_api_password)
+
+        balance = api.get_balance()
+
+        transactions = []
+        for i in range(1):
+            transactions += api.get_transaction_page(page=i, offset=1, sort='des')
+            time.sleep(1)
+        filtered_transactions = []
+
+        for transaction in transactions:
+            balance_converted = self.convert_balance(transaction['value'])
+            if balance_converted >= self.object.minimum_income_to_spy and balance_converted <= self.object.maximum_income_to_spy:
+
+                filtered_transactions.append({
+                    'value': balance_converted,
+                    'transaction_date': datetime.fromtimestamp(int(transaction['timeStamp'])),
+                    'from': transaction['from'] if transaction['from'] != self.object.eth_adress else "",
+                    'to': transaction['to'] if transaction['to'] != self.object.eth_adress else "",
+                })
+        return filtered_transactions, balance
+
+
+class UserApiTemplateView(TemplateView):
+    template_name = "coins/userapistrings_list.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['api_list_keys'] = UserApiStrings.objects.filter(user=self.request.user)
+        return context
+
+
+class UserApiCreateView(CreateView):
+    model = UserApiStrings
+    fields = ["user", "user_api_password", "user_api_name"]
+    success_url = "api_list"
 
     def get_initial(self):
         return {"user": self.request.user}
@@ -150,14 +253,54 @@ class UserWalletRequestCreateView(CreateView):
         return form
 
 
-class UserWalletRequestListView(ListView):
-    model = UserWalletRequest
+class UserApiRequestUpdateView(UpdateView):
+    model = UserApiStrings
+    fields = ["user", "user_api_password", "user_api_name"]
+    success_url = reverse_lazy('api_list')
 
 
-#update view
-#delete view
-#detail view
+class UserApiRequestDeleteView(DeleteView):
+    model = UserApiStrings
+    success_url = reverse_lazy('api_list')
+
+
+class TwitterHashTagsCreateView(CreateView):
+    model = TwitterHashTags
+    fields = ["twitter_hash_tag", "user", "wallet", "twitter_username", "mode"]
+
+    def get_success_url(self):
+        return reverse_lazy('wallet_detail', args=[self.kwargs['wallet_id'], ])
+
+    def get_initial(self):
+        return {"user": self.request.user, "wallet": self.kwargs['wallet_id']}
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['user'].widget = forms.HiddenInput()
+        form.fields['wallet'].widget = forms.HiddenInput()
+        return form
+
+
+class TwitterHashTagsDeleteView(DeleteView):
+    model = TwitterHashTags
+    # success_url = reverse_lazy('wallet_detail')
+
+    def get_success_url(self):
+        return reverse_lazy('wallet_detail', args=[self.kwargs['wallet_id'], ])
+
+
+class UserSettingsUpdateView(UpdateView):
+    model = UserSettings
+    fields = ["twitter_token"]
+    success_url = reverse_lazy('spy')
 
 
 
+
+
+
+
+# https://docs.djangoproject.com/en/4.0/ref/class-based-views/generic-editing/
+
+# https://docs.djangoproject.com/en/4.0/ref/class-based-views/generic-display/
 
