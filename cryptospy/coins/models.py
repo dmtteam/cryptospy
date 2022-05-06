@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import User
 from django import forms
@@ -15,7 +16,7 @@ class UserWallet(models.Model):
     wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     minimum_income_to_spy = models.CharField(max_length=10)
-    minimum_outcome_to_spy = models.CharField(max_length=10)
+    maximum_income_to_spy = models.CharField(max_length=10)
     twitter = models.BooleanField(default=False)
     mail = models.BooleanField(default=False)
 
@@ -28,7 +29,7 @@ class UserWalletRequest(models.Model):
     label = models.CharField(max_length=100)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     minimum_income_to_spy = models.DecimalField(max_length=10, default=0.1, decimal_places=2, max_digits=20)
-    minimum_outcome_to_spy = models.DecimalField(max_length=10, default=0.1, decimal_places=2, max_digits=20)
+    maximum_income_to_spy = models.DecimalField(max_length=10, default=0.1, decimal_places=2, max_digits=20)
     twitter = models.BooleanField(default=False)
     mail = models.BooleanField(default=False)
     api_key = models.ForeignKey('UserApiStrings', on_delete=models.CASCADE, null=True)
@@ -72,10 +73,23 @@ class UserApiStrings(models.Model):
 
 class TwitterHashTags(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    twitter_hash_tag = models.CharField(max_length=42)
+    wallet = models.ForeignKey(UserWalletRequest, on_delete=models.CASCADE, null=True)
+    twitter_hash_tag = models.CharField(max_length=42, default="", blank=True)
+    twitter_username = models.CharField(max_length=42, default="", blank=True)
+    mode = models.CharField(max_length=1, choices=(("h", "HASH TAG"), ("u", "ACCOUNT")), default="h")
+
+    def clean(self):
+        if self.mode=="h" and self.twitter_username:
+            raise ValidationError("Mode hashtag, checked username")
 
 
-# python cryptospy/manage.py makemigrations
+class UserSettings(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="settings")
+    twitter_token = models.CharField(max_length=150, blank=True, default="")
+
+
+
+#
 # python cryptospy/manage.py migrate
 
 
