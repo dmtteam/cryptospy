@@ -11,7 +11,7 @@
 <br>
 
 <table bgcolor="98FB98" align="center" width="90%" cellspacing="0" border="1">
-    <tr><td><H3>Welcome to CryptoSpy v1 - django</H3></td></tr>
+    <tr><td><H3>Welcome to CryptoSpy v1 - <i>made with love in django framework</i></H3></td></tr>
 </table>
 
 <table align="center" width="90%" cellspacing="0" border="0">
@@ -28,6 +28,9 @@
 &nbsp/&nbsp
                     <a href="{% url 'api_list' %}"><u>API list</u></a>
 &nbsp/&nbsp
+                     <a href="{% url 'user_settings' user.settings.id %}"><u>Settings</u></a>
+&nbsp/&nbsp
+
 
                      <a href="{% url 'logged_out' %}"><u>Logout</u></a>
 
