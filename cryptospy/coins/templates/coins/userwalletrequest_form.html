@@ -8,7 +8,7 @@
     <tr>
         <td>
 Add an ETH wallet for tracking below:
-			<br><Br><br>
+			<br><Br>
 <div class="container py-5">
 	<form method="POST">
 		{% csrf_token %}
@@ -17,7 +17,22 @@ Add an ETH wallet for tracking below:
 		<button class="btn btn-primary" type="submit">Save wallet</button>
 	</form>
 </div>
+			<br>
+			<b>FAQ:</b><BR>
+			1. What is ETH adress?<br>
+			<i>
+				An Ethereum address is a 42-character hexadecimal address derived from
+				the last 20 bytes of the public key controlling the account with 0x appended in front.
+				e.g., 0xa1b1bbB8070Df2450810b8eB2425D543cfCeF79b.
+			</i><br>
+            2. What is Label?<br>
+			<i>Your own wallet name.</i><br>
+			3. What is minimum/maximum to spy?<br>
+			<i>This is the range "from ...to" which the data will be presented.</i><br>
+			4. What Api Key?<br>
+			<i>Choose which API you want the program to run on. Go to API List if blank.</i><br>
 
      </td></tr></table>
+<br>
 {% endblock %}
 
