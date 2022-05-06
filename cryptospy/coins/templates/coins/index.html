@@ -18,12 +18,22 @@
                     <li>get the current value of funds</li>
                     <li>spy defined movement on the wallet</li>
                     <li>automatically check the activity of tracked wallets on Twitter</li>
-                    <li>get email notifications</li>
+                    <li>get email notifications - SOON</li>
                 </ul>
             </div>
         </td>
         <td align="center" valign="top">
-<div class="bg-success">sth here or delete</div>
+<div class="bg-success">Tweets:</div>
+
+
+             <div style="height: 190px; width: 99%; overflow-x: hidden; overflow-y: scroll; margin: 10px">
+<a class="twitter-timeline" href="https://twitter.com/VitalikButerin">by VitalikButerin</a>
+          </div>
+
+</div>
+
+            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 
         </td>
     </tr>
@@ -31,11 +41,11 @@
 
 
 
-<table align="center" width="90%" cellspacing="0" border="1">
-    <tr>
+<table align="center" width="90%" cellspacing="0" border="0">
+    <tr class="bg-secondary">
         <td width="70%" valign="top" >
             <div>
-                <b><font color="red"><i>Sample tracked wallets:</i></font></b><br>
+                <b><font color="red">Sample tracked wallets:</font></b><br>
 {% for wallet in wallets %}
                 <b>{{ wallet.label }}:</b>
    <font color="blue">{{ wallet.eth_adress}}</font>
@@ -43,24 +53,7 @@
 {% endfor %}
                 </div>
         </td>
-        <td align="center" valign="bottom">
-*** empty space ***
-<br>
-{% for user_wallet in user_wallets %}
-               {{ user_wallet.user }}:
-{{ user_wallet.id_minimum_income_to_spy}}
-    <br>
-{% endfor %}
 
-
-
-
-<br>
-<br><Br>
-
-
-
-        </td>
     </tr>
 </table>
 
