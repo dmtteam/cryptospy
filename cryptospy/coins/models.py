@@ -79,8 +79,10 @@ class TwitterHashTags(models.Model):
     mode = models.CharField(max_length=1, choices=(("h", "HASH TAG"), ("u", "ACCOUNT")), default="h")
 
     def clean(self):
-        if self.mode=="h" and self.twitter_username:
-            raise ValidationError("Mode hashtag, checked username")
+        if self.mode == "h" and self.twitter_username:
+                raise ValidationError("Mode HASHTAG, checked username. Try again")
+        if self.mode == "u" and self.twitter_hash_tag:
+                raise ValidationError("Mode USERNAME, checked hashtag. Try again")
 
 
 class UserSettings(models.Model):
