@@ -10,9 +10,9 @@
 
 <div class="container py-5">
 	<form method="POST">
-	<b>Really delete {% csrf_token %} wallet?<br>
+        {% csrf_token %}
+        <b>Do you really want to delete your <font color="red"> {{ object.label }} </font> wallet?</b>
 
-        {{ object.label }}
         <br><bR>
 		{{ form|crispy }}
 
