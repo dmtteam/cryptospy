@@ -27,7 +27,16 @@ urlpatterns = [
 
     path('', main_page, name='index'),
     path('spy', spy_page, name='spy'),
-    path('results', results_page, name='results'),
+
+    path('api_list', UserApiTemplateView.as_view(), name='api_list'),
+
+    path('api_create', UserApiCreateView.as_view(), name='api_create'),
+
+
+    path('api_update/<pk>', UserApiRequestUpdateView.as_view(), name='api_update'),
+
+    path('api_delete/<pk>', UserApiRequestDeleteView.as_view(), name='api_delete'),
+
 
     path('register', register_page, name='register'),
 
@@ -46,13 +55,23 @@ urlpatterns = [
     #path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='password/password_reset_complete.html'),
     #name='password_reset_complete'),
 
-
     path('404.html', four_houndred_four_page, name='404'),
 
     path('create_wallet', UserWalletRequestCreateView.as_view(),  name='create_wallet'),
 
-    path('wallet_lists', UserWalletRequestListView.as_view(), name='wallet_lists')
+    path('wallet_lists', UserWalletRequestListView.as_view(), name='wallet_lists'),
 
+    path('wallet_update/<pk>', UserWalletRequestUpdateView.as_view(), name='wallet_update'),
+
+    path('wallet_delete/<pk>', UserWalletRequestDeleteView.as_view(), name='wallet_delete'),
+
+    path('wallet_detail/<pk>', UserWalletRequestDetailView.as_view(), name='wallet_detail'),
+
+    path('create_twitter_hashtag/<wallet_id>', TwitterHashTagsCreateView.as_view(), name='create_twitter_hashtag'),
+
+    path('delete_twitter_hashtag/<pk>/<wallet_id>', TwitterHashTagsDeleteView.as_view(), name='delete_twitter_hashtag'),
+
+    path('user_settings/<pk>', UserSettingsUpdateView.as_view(), name='user_settings'),
 
 ]
 
