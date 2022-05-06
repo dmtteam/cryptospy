@@ -80,9 +80,14 @@ class TwitterHashTags(models.Model):
 
     def clean(self):
         if self.mode == "h" and self.twitter_username:
-                raise ValidationError("Mode HASHTAG, checked username. Try again")
+                raise ValidationError("Mode HASHTAG, checked username. Try again.")
         if self.mode == "u" and self.twitter_hash_tag:
-                raise ValidationError("Mode USERNAME, checked hashtag. Try again")
+                raise ValidationError("Mode ACCOUNT, checked hashtag. Try again.")
+        if not self.twitter_username and self.mode == "u":
+                raise ValidationError("Empty TWITTER USERNAME. Try again.")
+        if not self.twitter_hash_tag and self.mode == "h":
+                raise ValidationError("Empty TWITTER Hash Tag. Try again.")
+
 
 
 class UserSettings(models.Model):
