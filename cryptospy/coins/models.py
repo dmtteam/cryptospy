@@ -89,7 +89,7 @@ class UserSettings(models.Model):
 
 
 
-#
+# python cryptospy/manage.py makemigrations
 # python cryptospy/manage.py migrate
 
 
