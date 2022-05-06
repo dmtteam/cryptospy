@@ -7,11 +7,14 @@
 <table align="center" width="90%" cellspacing="0" border="0">
     <tr>
         <td>
+                <b> Do you really want to delete your
+            <font color="red">
        {% if object.mode == 'h' %}
              {{ object.twitter_hash_tag }}
             {% else %}
                {{ object.twitter_username }}
             {% endif %}
+                </font> ?</b>
 <div class="container py-5">
 	<form method="POST">
 		{% csrf_token %}
@@ -19,9 +22,9 @@
 		{{ form|crispy }}
 		<button class="btn btn-primary" type="submit">Delete
         {% if object.mode == 'h' %}
-            HASHTAG
+            Tracked Twitter HashTag
             {% else %}
-            ACCOUNT
+            Tracked Twitter Account
             {% endif %}
         </button>
 	</form>
