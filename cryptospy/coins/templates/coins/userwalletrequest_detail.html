@@ -1,8 +1,13 @@
 {% extends 'coins/base_inside.html' %}
 
             {% block content %}
+
+ <div style="height: 200px; width: 90%; overflow-x: hidden; overflow-y: scroll; margin: 10px">
+ </div>
 <table align="center" width="90%" cellspacing="0" border="0">
+
     <tr>
+
         <td>
             <div class="bg-gray">
             <b>Label:</b> <i>{{ object.label}}</i>
@@ -12,6 +17,11 @@
             <b>Balance:</b> <i>{{ balance }} ETH</i>
             </div>
             <br>
+
+
+
+
+
                        <table border="1" bordercolor="PINK" cellspacing="0">
 
               <tr class="bg-gray">
@@ -33,7 +43,9 @@
   {% for item in api_data %}
 
     <TR>
+
        <TD>
+
          {{ item.transaction_date  }}
 &nbsp;
        </TD>
@@ -66,9 +78,16 @@
        </TD>
 
        </TD>
+
    </TR>
                   {% endfor %}
+
+
          </TABLE>
+
+
+
+
             <br>
             <h5>Search the entire <b>twitter.com</b> for a wallet:</h5>
                 <a href="https://twitter.com/search?q={{ object.eth_adress }}" target="_blank">
