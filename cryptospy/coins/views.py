@@ -165,7 +165,17 @@ class UserWalletRequestCreateView(CreateView):
 
 
 class UserWalletRequestListView(ListView):
-    model = UserWalletRequest
+    #model = UserWalletRequest
+
+    def get_queryset(self):
+        return UserWalletRequest.objects.filter(user=self.request.user)
+
+    #template_name = "coins/userwalletrequest_list.html"
+
+    #def get_context_data(self, **kwargs):
+       # context = super().get_context_data(**kwargs)
+       # context['user_wallet_list_all'] = UserWalletRequest.objects.filter(user=self.request.user)
+        #return context
 
 
 class UserWalletRequestUpdateView(UpdateView):
