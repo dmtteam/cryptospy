@@ -25,9 +25,7 @@ LOGIN_REDIRECT_URL = "/spy"
 #gmail_send/settings.py
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'cryptospyalert@gmail.com'
-# EMAIL_HOST_PASSWORD = 'auylnerwgydoneqp'
-EMAIL_HOST_PASSWORD = 'smrvjjseallgkmjt'
+
 
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
@@ -41,13 +39,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-9joc!g&8au9li!@%q*490_al$e!hm*+s(n)u8ek)lio^o^d5z!'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['cryptospy.pythonanywhere.com',
-                 ]
+
 
 
 # Application definition
@@ -142,9 +139,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = "/home/cryptospy/STATIC"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+from .sitesettings import *
