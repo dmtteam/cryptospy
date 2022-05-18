@@ -1,9 +1,9 @@
 {% extends 'coins/base_outside.html' %}
-
+{% load static %}
 {% block content %}
 
 
-<table align="center" width="90%" cellspacing="0" border="0">
+<table align="center" width="95%" cellspacing="0" border="0">
     <tr>
         <td width="50%" valign="top" >
             <div class="bg-secondary">
@@ -41,7 +41,7 @@
 
 
 
-<table align="center" width="90%" cellspacing="0" border="0">
+<table align="center" width="95%" cellspacing="0" border="0">
     <tr class="bg-secondary">
         <td width="70%" valign="top" >
             <div>
@@ -53,7 +53,10 @@
 {% endfor %}
                 </div>
         </td>
+<td align="right">
+    <img src="{% static 'eth4.jpg' %}">
 
+</td>
     </tr>
 </table>
 
