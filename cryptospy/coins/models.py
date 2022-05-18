@@ -89,17 +89,13 @@ class TwitterHashTags(models.Model):
                 raise ValidationError("Empty TWITTER Hash Tag. Try again.")
 
 
-
 class UserSettings(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="settings")
     twitter_token = models.CharField(max_length=150, blank=True, default="")
 
 
-
 # python cryptospy/manage.py makemigrations
 # python cryptospy/manage.py migrate
-
-
 
 # Create your models here.
 # on_delete=models.CASCADE - delete all settings if delete wallet
