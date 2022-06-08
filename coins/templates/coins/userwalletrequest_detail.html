@@ -1,0 +1,186 @@
+{% extends 'coins/base_inside.html' %}
+
+            {% block content %}
+
+
+
+<table align="center" width="100%" cellspacing="0" border="0">
+
+    <tr>
+
+        <td>
+            <div class="bg-gray">
+            <b>Label:</b> <i>{{ object.label}}</i>
+            <br>
+            <b>Adress:</b> <i>{{ object.eth_adress}}</i>
+            <bR>
+            <b>Balance:</b> <i>{{ balance }} ETH</i>
+            </div>
+            <br>
+        </td></tr></table>
+
+
+ <div style="height: 500px; width: 100%; overflow-x: hidden; overflow-y: scroll; margin: 0 auto">
+
+                       <table align="center" width="100%" border="1" bordercolor="PINK" cellspacing="0">
+
+              <tr class="bg-gray">
+                  <td>
+                      <b>DATE / TIME</b>&nbsp;&nbsp;
+                  </td>
+                  <td>
+                      <b>VALUE</b>&nbsp;&nbsp;
+                  </td>
+                    <td>
+                      <b>FROM WALLET (in)</b>&nbsp;&nbsp;
+                  </td>
+                  <td>
+                      <b>TO WALLET (out)</b>&nbsp;&nbsp;
+                  </td>
+
+</tr>
+
+  {% for item in api_data %}
+
+    <TR>
+
+       <TD>
+
+         {{ item.transaction_date  }}
+&nbsp;
+       </TD>
+       <TD>
+        <span id="eth_{{ item.id }}" data-tippy-content=" ~ {% widthratio item.value 1 eth_usd %} USD">
+
+           <font color="red">
+         {{ item.value  }}
+           </font>&nbsp;ETH&nbsp;
+        </span>
+
+       </TD>
+       <TD>
+           {% if item.from %}
+           <u>
+               <a href="https://etherscan.io/address/{{item.from}}" target="_blank">{{item.from}}</a>&nbsp;
+                     {% else %}
+           internal
+           {% endif %}
+                    </u>
+       </TD>
+       <TD>
+{% if item.to %}
+           <u>
+              <a href="https://etherscan.io/address/{{item.to}}" target="_blank">{{item.to}}</a>&nbsp;
+           {% else %}
+           internal
+           {% endif %}
+                    </u>
+       </TD>
+
+       </TD>
+
+   </TR>
+                  {% endfor %}
+
+
+         </TABLE>
+
+        </div>
+
+
+            <br>
+            <h5>Search the entire <b>twitter.com</b> for a wallet:</h5>
+                <a href="https://twitter.com/search?q={{object.eth_adress}}" target="_blank">
+                    https://twitter.com/search?q={{ object.eth_adress }}
+                </a>
+            <BR><BR>
+            <H5>Search custom <b>twitter.com</b> hashtags:</H5>
+                <a href="{% url 'create_twitter_hashtag' object.id %}">
+                    <u>add hashtag here</u>
+                </a>
+
+<table border="1" width="60%" bordercolor="PINK" cellspacing="0">
+               <tr class="bg-gray">
+                  <td width="20%">
+                      <b>HASHTAG:</b>&nbsp;&nbsp;
+                  </td>
+                   <td width="60%">
+                      <b>LINK:</b>&nbsp;&nbsp;
+                  </td>
+                     <td width="20%">
+                      <b>GOOD BYE!</b>&nbsp;&nbsp;
+                  </td>
+</tr></table>
+
+
+
+     {% for tag in twitter_hashtags %}
+    <table border="1" width="60%" bordercolor="PINK" cellspacing="0">
+                 <tr>
+                  <td width="20%">
+                      <b>{{ tag.twitter_hash_tag }}</b>&nbsp;&nbsp;
+                  </td>
+                            <td width="60%">
+                      <a href="https://twitter.com/hashtag/{{ tag.twitter_hash_tag }}" target="_blank">
+                          https://twitter.com/hashtag/{{ tag.twitter_hash_tag }}
+                      </a>
+                  </td>
+                <td width="20%">
+                         <a href="{% url 'delete_twitter_hashtag' tag.id object.id %}" >
+delete:<b> {{ tag.twitter_hash_tag }}</b></a>
+                  </td>
+</tr>
+</TABLE>
+ {% endfor %}
+
+
+  <BR>
+            <H5>Track custom <b>twitter.com</b> accounts:</H5>
+                <a href="{% url 'create_twitter_hashtag' object.id %}">
+                    <u>add account here</u>
+                </a>
+            <table border="1" width="40%" bordercolor="PINK" cellspacing="0">
+               <tr class="bg-gray">
+                  <td width="20%">
+                      <b>ACCOUNT:</b>
+                  </td>
+                     <td width="20%">
+                      <b>GOOD BYE!</b>
+                  </td>
+</tr></table>
+            {% for account in twitter_accounts %}
+    <table border="1" width="40%" bordercolor="PINK" cellspacing="0">
+                 <tr>
+                  <td width="20%">
+                      <b>{{ account.twitter_username }}</b>
+                  </td>
+                <td width="20%">
+                         <a href="{% url 'delete_twitter_hashtag' account.id object.id %}">
+delete:<b> {{ account.twitter_username }}</b></a>
+                  </td>
+</tr>
+</TABLE>
+ {% endfor %}
+
+<!-- #{{ twitter_data }} -->
+
+<Br>
+
+ <div style="display: flex; flex-wrap: wrap">
+{% for account in twitter_accounts %}
+            <div style="height: 395px; width: 30%; overflow-x: hidden; overflow-y: scroll; margin: 10px">
+<a class="twitter-timeline" href="https://twitter.com/{{ account.twitter_username }}">Tweets by {{ account.twitter_username }}</a>
+          </div>
+            {% endfor %}
+</div>
+
+            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+<div class="container py-5">
+
+</div>
+
+     </td></tr></table>
+<br><br>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'coins/base_inside.html' %}
+
+
+{% load crispy_forms_tags %}
+            {% block content %}
+<table align="center" width="90%" cellspacing="0" border="0">
+    <tr>
+        <td>
+	<b>Add Twitter hashtag or Twitter account do spy below:</b>
+			<br><Br><br>
+<div class="container py-5">
+	<form method="POST">
+		{% csrf_token %}
+		{{ form|crispy }}
+<br>
+		<button class="btn btn-primary" type="submit">Add hashtag/account</button>
+	</form>
+</div>
+
+     </td></tr></table>
+{% endblock %}

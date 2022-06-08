@@ -1,0 +1,25 @@
+{% extends 'coins/base_inside.html' %}
+
+
+{% load crispy_forms_tags %}
+            {% block content %}
+<table align="center" width="90%" cellspacing="0" border="0">
+    <tr>
+        <td>
+			<b>User settings:</b>
+			<br><Br><br>
+<div class="container py-5">
+	<form method="POST">
+		{% csrf_token %}
+		{{ form|crispy }}
+<br>
+		<button class="btn btn-primary" type="submit">Save settings</button>
+	</form>
+</div>
+			<br><br>
+			<b>FAQ:</b><BR>
+			1. What's Twitter token field?<br>
+			<i>You can provide Your custom Twitter Api Bearer Token. Read more below:</i><br>
+			<a href="https://developer.twitter.com/en" target="_blank">https://developer.twitter.com/en</a>
+     </td></tr></table>
+{% endblock %}

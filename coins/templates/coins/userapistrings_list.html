@@ -1,0 +1,74 @@
+{% extends 'coins/base_inside.html' %}
+
+
+{% block content %}
+<table align="center" width="90%" cellspacing="0" border="0">
+    <tr>
+        <td>
+<b>Etherscan.io API list:</b>
+            <br><br>
+           <table border="1" bordercolor="PINK" cellspacing="0">
+              <tr>
+                  <td>
+                      <b>YOUR custom API NAME:</b>&nbsp;&nbsp;
+                  </td>
+                  <td>
+                      <b>REAL API PASSWORD (etherscan.io):</b>&nbsp;&nbsp;
+                  </td>
+                  <td>
+                      <b>MODIFY</b>&nbsp;&nbsp;
+                  </td>
+                  <td>
+                      <b>GOOD BYE!</b>&nbsp;&nbsp;
+                  </td>
+              </tr>
+                  {% for key in api_list_keys %}
+               <tr>
+                  <td>
+                      {{ key.user_api_name }}
+                  </td>
+                  <td>
+                      {{ key.user_api_password }}
+
+                  </td>
+ <td>
+                    <a href="{% url 'api_update' key.id %}">
+                <b><u>update</u></b>
+                </a>
+
+                  </td>
+                  <td>
+                     <a href="{% url 'api_delete' key.id %}">
+                   <font color="red">
+                       <u>
+             delete
+                           </u>
+                       </font>
+            </a>
+
+                  </td>
+
+              </tr>
+                {% endfor %}
+           </table>
+
+<bR>
+
+         <a href="{% url 'api_create' %}"><b><u>Add new api here</u></b></a>
+<br><br>
+			<b>FAQ:</b><BR>
+			1. Why do I need API name and API Password?<br>
+			<i>CryptoSpy uses data downloaded via API from The Ethereum Blockchain Explorer (etherscan.io).
+                You need an API password for CrypoSpy to work.
+
+                Read more below (API docs):</i><br>
+			<a href="https://docs.etherscan.io/" target="_blank">https://docs.etherscan.io/</a>
+            <br><Br>
+            2. Where can I get api password?<br>
+			<i>Choose the plan that's right for you and register here:</i><br>
+			<a href=" https://etherscan.io/register" target="_blank"> https://etherscan.io/register</a>
+
+
+ </td></tr></table>
+
+{% endblock %}

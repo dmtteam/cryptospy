@@ -1,0 +1,26 @@
+
+{% extends 'coins/base_inside.html' %}
+
+
+{% load crispy_forms_tags %}
+            {% block content %}
+<table align="center" width="90%" cellspacing="0" border="0">
+    <tr>
+        <td>
+            <b>Do you really want to delete your <font color="red"> {{ object.user_api_name }} </font> api?</b>
+
+<div class="container py-5">
+	<form method="POST">
+		{% csrf_token %}
+
+
+
+        <br><bR>
+		{{ form|crispy }}
+
+		<button class="btn btn-primary" type="submit">Delete API</button>
+	</form>
+</div>
+
+     </td></tr></table>
+{% endblock %}

@@ -1,0 +1,33 @@
+
+{% extends 'coins/base_inside.html' %}
+
+
+{% load crispy_forms_tags %}
+            {% block content %}
+<table align="center" width="90%" cellspacing="0" border="0">
+    <tr>
+        <td>
+                <b> Do you really want to delete your
+            <font color="red">
+       {% if object.mode == 'h' %}
+             {{ object.twitter_hash_tag }}
+            {% else %}
+               {{ object.twitter_username }}
+            {% endif %}
+                </font> ?</b>
+<div class="container py-5">
+	<form method="POST">
+		{% csrf_token %}
+        <br><bR>
+		{{ form|crispy }}
+		<button class="btn btn-primary" type="submit">Delete
+        {% if object.mode == 'h' %}
+            Tracked Twitter HashTag
+            {% else %}
+            Tracked Twitter Account
+            {% endif %}
+        </button>
+	</form>
+</div>
+     </td></tr></table>
+{% endblock %}
